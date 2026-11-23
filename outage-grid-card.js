@@ -95,11 +95,11 @@ class OutageGridCard extends HTMLElement {
         .status { display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:10px; }
         .dot { width:9px; height:9px; border-radius:50%; background:${offNow ? "#e53935" : "#4caf50"}; }
         .tabs { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
-        .tab { text-align:center; padding:10px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:600;
+        .tab { text-align:center; padding:6px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:600;
                background:var(--secondary-background-color); color:var(--primary-text-color); }
         .tab.on { background:#0288d1; color:#fff; }
         .grid { display:grid; grid-template-columns:repeat(6,1fr); gap:6px; }
-        .cell { text-align:center; padding:10px 0; border-radius:8px; font-weight:600; font-size:14px; box-sizing:border-box; }
+        .cell { text-align:center; padding:5px 0; border-radius:6px; font-weight:600; font-size:13px; box-sizing:border-box; }
         .cell.cur { outline:2px solid #26c6da; }
         .sum { font-weight:600; font-size:13px; margin-top:14px; }
         .next { font-size:13px; margin-top:6px; color:var(--secondary-text-color); }
