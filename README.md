@@ -15,7 +15,11 @@
 2. Натисніть **«Додати за посиланням»** у правому верхньому куті.
    У старіших версіях: ⋮ → **Custom repositories**, тип **Dashboard**.
 3. Вставте посилання на цей репозиторій:
-   `https://github.com/otzako/outage-grid-card`
+
+   ```
+   https://github.com/otzako/outage-grid-card
+   ```
+
    і натисніть **«Додати»**.
 4. У пошуку Marketplace знайдіть **Outage Grid Card**, відкрийте картку та натисніть **Download** (Завантажити).
 5. Оновіть сторінку (Ctrl+Shift+R).
