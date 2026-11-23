@@ -13,7 +13,7 @@
 1. Відкрийте HACS і натисніть **«Додати за посиланням»** (у правому верхньому куті).
    У старіших версіях: ⋮ → **Custom repositories**.
 2. Вставте посилання на цей репозиторій:
-   `https://github.com/<ваш_логін>/outage-grid-card`
+   `https://github.com/otzako/outage-grid-card`
 3. Виберіть тип **Панель** (Dashboard) і підтвердіть.
 4. Знайдіть **Outage Grid Card** у списку та натисніть **Download**.
 5. Оновіть сторінку (Ctrl+Shift+R).
