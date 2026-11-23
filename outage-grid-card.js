@@ -145,7 +145,11 @@ class OutageGridCard extends HTMLElement {
 
 customElements.define("outage-grid-card", OutageGridCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: "outage-grid-card", name: "Outage Grid Card" });
+window.customCards.push({
+  type: "outage-grid-card",
+  name: "Графік відключень (Outage Grid Card)",
+  description: "Сітка відключень світла по годинах за календарем Svitlo Yeah",
+});
 
 class OutageGridCardEditor extends HTMLElement {
   setConfig(config) {
