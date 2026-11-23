@@ -129,9 +129,100 @@ class OutageGridCard extends HTMLElement {
     this.shadowRoot.querySelector("[data-r]").addEventListener("click", () => this._load());
   }
 
+    static getConfigElement() {
+    return document.createElement("outage-grid-card-editor");
+  }
+
+  static getStubConfig(hass) {
+    const id = Object.keys(hass.states).find(
+      i => i.startsWith("calendar.") && /_planned_outages$/.test(i)
+    );
+    return { entity: id || "calendar.ваша_черга_planned_outages", title: "Графік відключень" };
+  }
+
   getCardSize() { return 8; }
 }
 
 customElements.define("outage-grid-card", OutageGridCard);
 window.customCards = window.customCards || [];
 window.customCards.push({ type: "outage-grid-card", name: "Outage Grid Card" });
+
+class OutageGridCardEditor extends HTMLElement {
+  setConfig(config) {
+    this._config = config;
+    this._update();
+  }
+
+  set hass(hass) {
+    const first = !this._hass;
+    this._hass = hass;
+    if (first) this._update();
+  }
+
+  _options() {
+    const h = this._hass;
+    const list = Object.keys(h.states)
+      .filter(id => {
+        if (!id.startsWith("calendar.")) return false;
+        const reg = h.entities && h.entities[id];
+        return (reg && reg.platform === "svitlo_yeah") || /_(planned|scheduled)_outages$/.test(id);
+      })
+      .map(id => ({ id, name: h.states[id].attributes.friendly_name || id }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+    const cur = this._config.entity;
+    if (cur && !list.some(o => o.id === cur)) list.unshift({ id: cur, name: cur });
+    return list;
+  }
+
+  _fire(config) {
+    this._config = config;
+    this.dispatchEvent(new CustomEvent("config-changed", {
+      detail: { config }, bubbles: true, composed: true,
+    }));
+  }
+
+  _update() {
+    if (!this._hass || !this._config) return;
+    if (!this._built) {
+      this._built = true;
+      this.innerHTML = `
+        <style>
+          .row { margin-bottom: 16px; }
+          label { display: block; font-size: 12px; margin-bottom: 4px; color: var(--secondary-text-color); }
+          select, input { width: 100%; box-sizing: border-box; padding: 10px; font-size: 14px; border-radius: 6px;
+            border: 1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); }
+          .hint { font-size: 12px; margin-top: 6px; color: var(--secondary-text-color); }
+        </style>
+        <div class="row">
+          <label>Календар відключень (Svitlo Yeah)</label>
+          <select id="ent"></select>
+          <div class="hint" id="hint"></div>
+        </div>
+        <div class="row">
+          <label>Заголовок</label>
+          <input id="ttl" type="text">
+        </div>`;
+      this.querySelector("#ent").addEventListener("change",
+        e => this._fire({ ...this._config, entity: e.target.value }));
+      this.querySelector("#ttl").addEventListener("change",
+        e => this._fire({ ...this._config, title: e.target.value }));
+    }
+
+    const sel = this.querySelector("#ent");
+    const opts = this._options();
+    sel.textContent = "";
+    sel.appendChild(new Option("— оберіть календар —", ""));
+    opts.forEach(o => sel.appendChild(new Option(o.name, o.id)));
+    sel.value = this._config.entity || "";
+
+    this.querySelector("#hint").textContent = opts.length
+      ? "Зазвичай потрібен календар Planned Outages вашої черги."
+      : "Календарі Svitlo Yeah не знайдено. Перевірте, що інтеграція встановлена.";
+
+    const ttl = this.querySelector("#ttl");
+    const val = this._config.title || "";
+    if (ttl.value !== val) ttl.value = val;
+  }
+}
+
+customElements.define("outage-grid-card-editor", OutageGridCardEditor);
