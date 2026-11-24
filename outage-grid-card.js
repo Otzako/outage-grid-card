@@ -90,7 +90,7 @@ class OutageGridCard extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>
-        ha-card { padding: 16px; }
+        ha-card { padding: 16px; border-left: 4px solid ${offNow ? "#e53935" : "#4caf50"}; }
         .title { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
         .status { display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:10px; }
         .dot { width:9px; height:9px; border-radius:50%; background:${offNow ? "#e53935" : "#4caf50"}; }
@@ -149,6 +149,7 @@ window.customCards.push({
   type: "outage-grid-card",
   name: "Графік відключень (Outage Grid Card)",
   description: "Сітка відключень світла по годинах за календарем Svitlo Yeah",
+  preview: true,
 });
 
 class OutageGridCardEditor extends HTMLElement {
