@@ -86,7 +86,7 @@ class OutageGridCard extends HTMLElement {
 
     const fmtDay = d => `${this._pad(d.getDate())}.${this._pad(d.getMonth() + 1)}`;
     const tomorrow = new Date(base); tomorrow.setDate(base.getDate() + 1);
-    const title = this._c.title || "Графік відключень";
+        const title = this._c.title !== undefined ? this._c.title : "Графік відключень";
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -108,7 +108,7 @@ class OutageGridCard extends HTMLElement {
         .err { color:#e53935; font-size:12px; margin-bottom:8px; }
       </style>
       <ha-card>
-        <div class="title">${title}</div>
+                ${title ? `<div class="title">${title}</div>` : ""}
         ${this._err ? `<div class="err">Помилка: ${this._err}</div>` : ""}
         <div class="status"><span class="dot"></span>${offNow ? "Світла немає (за графіком)" : "Світло є (за графіком)"}</div>
         <div class="tabs">
