@@ -1,4 +1,5 @@
 # Графік відключень (Outage Grid Card)
+![Графік відключень](https://raw.githubusercontent.com/otzako/outage-grid-card/main/screenshot.png)
 
 Картка для Home Assistant: сітка графіка відключень світла по годинах (сьогодні / завтра).
 Працює з календарем інтеграції [Svitlo Yeah](https://github.com/ALERTua/ha-svitlo-yeah).
